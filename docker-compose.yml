@@ -1,0 +1,29 @@
+services:
+  project-service:
+    build: .
+    ports:
+      - "5002:5002"
+    depends_on:
+      - mongodb
+    environment:
+      - PORT=5002
+      - MONGO_URI=mongodb+srv://mdanish00707_db_user:oShcO47T4NzooqRh@cluster0.jaoqh89.mongodb.net/task-manager
+      - JWT_SECRET=supersecret
+    networks:
+      - taskflow-network
+
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27018:27017"
+    volumes:
+      - mongodb_project_data:/data/db
+    networks:
+      - taskflow-network
+
+networks:
+  taskflow-network:
+    driver: bridge
+
+volumes:
+  mongodb_project_data:
